@@ -1,4 +1,5 @@
 import {
+  DAFALGAN_NAME,
   Drug,
   FERVEX_NAME,
   HERBAL_TEA_NAME,
@@ -56,7 +57,7 @@ describe("Pharmacy", () => {
     ]);
   });
 
-  it("Fervex drugs: increment the benefit according to expiration levels and set to 0 if the drug expires", () => {
+  it("Fervex drugs: should increment the benefit according to expiration levels and set to 0 if the drug expires", () => {
     expect(
       new Pharmacy([
         new Drug(FERVEX_NAME, 10, 2),
@@ -71,6 +72,20 @@ describe("Pharmacy", () => {
       new Drug(FERVEX_NAME, -1, 0),
       new Drug(FERVEX_NAME, 1, 50),
       new Drug(FERVEX_NAME, 0, 3),
+    ]);
+  });
+
+  it("Dafalgan drugs: should decrease the benefit by 2", () => {
+    expect(
+      new Pharmacy([
+        new Drug(DAFALGAN_NAME, 2, 30),
+        new Drug(DAFALGAN_NAME, 2, 52),
+        new Drug(DAFALGAN_NAME, 1, -1),
+      ]).updateBenefitValue(),
+    ).toEqual([
+      new Drug(DAFALGAN_NAME, 1, 28),
+      new Drug(DAFALGAN_NAME, 1, 48),
+      new Drug(DAFALGAN_NAME, 0, 0),
     ]);
   });
 });

@@ -6,6 +6,7 @@ const FERVEX_SECOND_THRESHOLD = 6;
 export const HERBAL_TEA_NAME = "Herbal Tea";
 export const MAGIC_PILL_NAME = "Magic Pill";
 export const FERVEX_NAME = "Fervex";
+export const DAFALGAN_NAME = "Dafalgan";
 
 function clampBenefit(benefit) {
   return Math.max(Math.min(benefit, MAX_BENEFIT_VALUE), MIN_BENEFIT_VALUE);
@@ -24,7 +25,7 @@ export class Pharmacy {
     this.drugs = drugs;
   }
 
-  updateRegularDrug(drug) {
+  updateRegularDrugBenefitValue(drug) {
     let { expiresIn, benefit } = drug;
     if (benefit > MIN_BENEFIT_VALUE) {
       benefit--;
@@ -38,7 +39,7 @@ export class Pharmacy {
     return new Drug(drug.name, expiresIn, benefit);
   }
 
-  updateHerbalTea(drug) {
+  updateHerbalTeaBenefitValue(drug) {
     let { expiresIn, benefit } = drug;
     if (benefit < MAX_BENEFIT_VALUE) {
       benefit++;
@@ -52,7 +53,7 @@ export class Pharmacy {
     return new Drug(drug.name, expiresIn, benefit);
   }
 
-  updateFervex(drug) {
+  updateFervexBenefitValue(drug) {
     let { expiresIn, benefit } = drug;
     if (benefit < MAX_BENEFIT_VALUE) {
       benefit++;
@@ -72,17 +73,33 @@ export class Pharmacy {
     return new Drug(drug.name, expiresIn, benefit);
   }
 
+  updateDafalganBenefitValue(drug) {
+    let { expiresIn, benefit } = drug;
+    if (benefit > MIN_BENEFIT_VALUE) {
+      benefit -= 2;
+    }
+    expiresIn--;
+
+    if (expiresIn < 0 && benefit > MIN_BENEFIT_VALUE) {
+      benefit -= 2;
+    }
+
+    return new Drug(drug.name, expiresIn, benefit);
+  }
+
   updateBenefitValue() {
     return this.drugs.map((drug) => {
       switch (drug.name) {
         case HERBAL_TEA_NAME:
-          return this.updateHerbalTea(drug);
+          return this.updateHerbalTeaBenefitValue(drug);
         case MAGIC_PILL_NAME:
           return drug;
         case FERVEX_NAME:
-          return this.updateFervex(drug);
+          return this.updateFervexBenefitValue(drug);
+        case DAFALGAN_NAME:
+          return this.updateDafalganBenefitValue(drug);
         default:
-          return this.updateRegularDrug(drug);
+          return this.updateRegularDrugBenefitValue(drug);
       }
     });
   }
