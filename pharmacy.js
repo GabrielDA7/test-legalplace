@@ -88,7 +88,7 @@ export class Pharmacy {
   }
 
   updateBenefitValue() {
-    return this.drugs.map((drug) => {
+    this.drugs = this.drugs.map((drug) => {
       switch (drug.name) {
         case HERBAL_TEA_NAME:
           return this.updateHerbalTeaBenefitValue(drug);
@@ -102,5 +102,7 @@ export class Pharmacy {
           return this.updateRegularDrugBenefitValue(drug);
       }
     });
+
+    return this.drugs;
   }
 }
