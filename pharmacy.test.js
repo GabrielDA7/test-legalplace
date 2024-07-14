@@ -75,7 +75,7 @@ describe("Pharmacy", () => {
     ]);
   });
 
-  it("Dafalgan drugs: should decrease the benefit by 2", () => {
+  it("Dafalgan drugs: should decrease twice as fast as normal drugs", () => {
     expect(
       new Pharmacy([
         new Drug(DAFALGAN_NAME, 0, 30),
