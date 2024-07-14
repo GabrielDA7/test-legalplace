@@ -78,11 +78,13 @@ describe("Pharmacy", () => {
   it("Dafalgan drugs: should decrease the benefit by 2", () => {
     expect(
       new Pharmacy([
+        new Drug(DAFALGAN_NAME, 0, 30),
         new Drug(DAFALGAN_NAME, 2, 30),
         new Drug(DAFALGAN_NAME, 2, 52),
         new Drug(DAFALGAN_NAME, 1, -1),
       ]).updateBenefitValue(),
     ).toEqual([
+      new Drug(DAFALGAN_NAME, -1, 26),
       new Drug(DAFALGAN_NAME, 1, 28),
       new Drug(DAFALGAN_NAME, 1, 48),
       new Drug(DAFALGAN_NAME, 0, 0),
